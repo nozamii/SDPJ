@@ -1,48 +1,37 @@
 package com.example.DB.RealDB.Service;
 
+import com.example.DB.RealDB.BraceletProduct;
 import com.example.DB.RealDB.Customer;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.example.DB.RealDB.Repository.CustomerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
-public class CustomerRepo{
-    @PersistenceContext
-    private EntityManager em;
+@Service
+@Transactional
+public class CustomerRepo {
+    @Autowired
+    private CustomerRepository rp;
 
-    public boolean exists(int id) {
-        return true;
+
+    public List<Customer> getAll() {
+        return rp.findAll();
     }
 
-    @Transactional
-    public Customer insert(Customer b){
-        em.persist(b);
-        return b;
-    }
-    public List<Customer> findAll(){
-        Query q = em.createQuery("from Customer");
-        return q.getResultList();
+    public Customer getByID(long id) {
+        return rp.findById(id).get();
     }
 
-    public Customer findbyID(String id){
-
-        return em.find(Customer.class,id);
+    public void add(Customer b) {
+        rp.save(b);
     }
 
-    @Transactional
-    public Customer save(Customer b){
-        em.persist(b);
-        return b;
-    }
-    @Transactional
-    public void delete(String id){
-        Customer b = em.find(Customer.class,id);
-        em.remove(b);
+    public void delete(long id) {
+        rp.deleteById(id);
     }
 
 

@@ -1,31 +1,61 @@
 package com.example.DB.RealDB;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jdk.jfr.Timestamp;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
 public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
-    private String Oid;
-    private String cid;
-    private Date date;
+    private long id;
+    private long oid;
 
-    public void setId(String id) { this.id = id; }
-    public String getId() { return id; }
+    @OneToOne (cascade=CascadeType.ALL)
+    @JoinColumn
+    private BraceletOrder O;
 
-    public String getOid() { return Oid; }
-    public void setOid(String oid) { Oid = oid; }
+    @CreationTimestamp
+    @DateTimeFormat
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime date;
 
-    public String getCid() { return cid; }
-    public void setCid(String cid) { this.cid = cid; }
+    public long getId() {
+        return id;
+    }
 
-    public Date getDate() { return date; }
-    public void setDate(Date date) { this.date = date; }
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getOid() {
+        return oid;
+    }
+
+    public void setOid(long oid) {
+        this.oid = oid;
+    }
+
+    public BraceletOrder getO() {
+        return O;
+    }
+
+    public void setO(BraceletOrder o) {
+        O = o;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
 
 
 }

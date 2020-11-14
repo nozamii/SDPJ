@@ -1,45 +1,41 @@
 package com.example.DB.RealDB.Service;
 
 import com.example.DB.RealDB.BraceletOrder;
-import org.springframework.transaction.annotation.Transactional;
+import com.example.DB.RealDB.BraceletProduct;
+import com.example.DB.RealDB.Customer;
+import com.example.DB.RealDB.Repository.OrderRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 import org.springframework.stereotype.Repository;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
+
 @Repository
+@Service
+@Transactional
 public class OrderRepo {
-    @PersistenceContext
-    private EntityManager em;
 
-    @Transactional
-    public BraceletOrder insert(BraceletOrder b){
-        em.persist(b);
-        return b;
-    }
-    public List<BraceletOrder> findAll(){
-        Query q = em.createQuery("from Order");
-        return q.getResultList();
+    @Autowired
+    private OrderRepository rp;
+
+    public List<BraceletOrder> getAll() {
+        return rp.findAll();
     }
 
-    public BraceletOrder findbyID(String id){
-
-        return em.find(BraceletOrder.class,id);
+    public BraceletOrder getByID(long id) {
+        return rp.findById(id).get();
     }
 
-    @Transactional
-    public BraceletOrder save(BraceletOrder b){
-        em.persist(b);
-        return b;
-    }
-    @Transactional
-    public void delete(String id){
-        BraceletOrder b = em.find(BraceletOrder.class,id);
-        em.remove(b);
+    public BraceletOrder add(BraceletOrder b) {
+      return  rp.save(b);
     }
 
-
+    public void delete(long id) {
+        rp.deleteById(id);
+    }
 
 }

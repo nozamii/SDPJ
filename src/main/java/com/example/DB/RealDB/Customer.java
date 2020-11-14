@@ -1,4 +1,5 @@
 package com.example.DB.RealDB;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,25 +9,49 @@ import javax.persistence.Id;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String cid;
+    private long cid;
     private String cname;
     private String ctell;
+    private String address;
 
-    public Customer(){
+    public Customer() {
 
     }
 
-    public Customer(String c,String cn,String t){
-        this.cid=c;
-        this.cname=cn;
-        this.ctell=t;
+    public Customer(long c, String cn, String t,String ad) {
+        this.cid = c;
+        this.cname = cn;
+        this.ctell = t;
+        this.address =ad;
     }
-    public void setId(String proid) {this.cid = proid;    }
-    public String getId() {return cid; }
+    public String getAddress() {
+        return address;
+    }
 
-    public void setName(String pron) {this.cname = pron;    }
-    public String getName() {return cname; }
+    public void setAddress(String address) {
+        this.address = address;
+    }
+    public void setId(long proid) {
+        this.cid = proid;
+    }
 
-    public String getCtell() { return ctell; }
-    public void setCtell(String ctell) { this.ctell = ctell; }
+    public long getId() {
+        return cid;
+    }
+
+    public void setName(String pron) {
+        this.cname = pron;
+    }
+
+    public String getName() {
+        return cname;
+    }
+
+    public String getCtell() {
+        return ctell;
+    }
+
+    public void setCtell(String ctell) {
+        this.ctell = ctell;
+    }
 }

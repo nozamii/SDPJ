@@ -1,55 +1,94 @@
 package com.example.DB.RealDB;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
+
 public class BraceletOrder {
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private String oid;
-        private String braceletid;
-        private String customerid;
-        private String braceletname;
-        private String customername;
-        private double price;
-        private Date dateorder;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    private long bid;
+    private long cid;
 
-        public BraceletOrder(){
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn
+    private BraceletProduct b;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn
+    private Customer c;
 
-        }
-        public BraceletOrder(String oid,String cid,String bid,String bname,String cname,double p){
-            this.oid=oid;
-            this.braceletid=bid;
-            this.customerid=cid;
-            this.braceletname=bname;
-            this.customername=cname;
-            this.price=p;
+    @CreationTimestamp
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime dateorder;
 
-        }
-        public String getOid() {return oid;}
-        public void setOid(String oid) { this.oid = oid;}
+    public long getId() {
+        return id;
+    }
 
-        public String getBid() {return braceletid; }
-        public void setBid(String bid) { this.braceletid = bid; }
+    public void setId(long id) {
+        this.id = id;
+    }
 
-        public String getBname() { return braceletname; }
-        public void setBname(String bname) { this.braceletname = bname; }
+    public long getBid() {
+        return bid;
+    }
 
-        public String getCid() {return customerid; }
-        public void setCid(String cid) { this.customerid = cid; }
+    public void setBid(long bid) {
+        this.bid = bid;
+    }
 
-        public String getCname() { return customername; }
-        public void setCname(String cname) { this.customername = cname; }
+    public long getCid() {
+        return cid;
+    }
 
-        public void setPrice(double pron) {this.price = pron;    }
-        public double getPrice() {return price; }
+    public void setCid(long cid) {
+        this.cid = cid;
+    }
 
-        public void setDate(Date dnow){ this.dateorder=dnow;}
-        public Date getDateorder() {return dateorder; }
+    public BraceletProduct getB() {
+        return b;
+    }
+
+    public void setB(BraceletProduct b) {
+        this.b = b;
+    }
+
+    public Customer getC() {
+        return c;
+    }
+
+    public void setC(Customer c) {
+        this.c = c;
+    }
+
+    public LocalDateTime getDateorder() {
+        return dateorder;
+    }
+
+    public void setDateorder(LocalDateTime dateorder) {
+        this.dateorder = dateorder;
+    }
 
 
-
-
+    public BraceletOrder(long oid, BraceletProduct bb, Customer cc, double p) {
+        this.id = oid;
+        this.b = bb;
+        this.c = cc;
 
     }
+
+    public BraceletOrder() {
+
+    }
+
+
+}

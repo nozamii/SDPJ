@@ -1,43 +1,36 @@
 package com.example.DB.RealDB.Service;
 
 import com.example.DB.RealDB.BraceletProduct;
+import com.example.DB.RealDB.Customer;
+import com.example.DB.RealDB.Repository.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
+@Service
+@Transactional
 public class ProductRepo {
-    @PersistenceContext
-    private EntityManager em;
+    @Autowired
+    private ProductRepository pr;
 
-    @Transactional
-    public BraceletProduct insert(BraceletProduct b){
-        em.persist(b);
-        return b;
-    }
-    public List<BraceletProduct> findAll(){
-        Query q = em.createQuery("from BraceletProduct");
-        return q.getResultList();
+    public List<BraceletProduct> getAll() {
+        return pr.findAll();
     }
 
-    public BraceletProduct findbyID(String id){
-        return em.find(BraceletProduct.class,id);
+    public BraceletProduct getByID(long id) {
+        return pr.findById(id).get();
     }
 
-    @Transactional
-    public BraceletProduct save(BraceletProduct b){
-        em.persist(b);
-        return b;
-    }
-    @Transactional
-    public void delete(String id){
-        BraceletProduct b = em.find(BraceletProduct.class,id);
-        em.remove(b);
+    public BraceletProduct add(BraceletProduct b) {
+        return  pr.save(b);
     }
 
+    public void delete(long id) {
+        pr.deleteById(id);
+    }
 
 }

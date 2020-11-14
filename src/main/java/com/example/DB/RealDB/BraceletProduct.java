@@ -9,27 +9,51 @@ import javax.persistence.Id;
 public class BraceletProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String bid;
+    private long bid;
     private String bname;
     private double price;
 
-     public BraceletProduct(String b,String bn,double p){
-        this.bid=b;
-        this.bname=bn;
-        this.price=p;
+    public BraceletProduct(long i, String bn, double p) {
+        this.bname = bn;
+        this.price = p;
 
+    }
+
+    public BraceletProduct(String bn, double p) {
+        this.bname = bn;
+        this.price = p;
+
+    }
+
+    public BraceletProduct(double p) {
+        this.price = p;
     }
 
     public BraceletProduct() {
 
     }
 
-    public void setId(String proid) {this.bid = proid;    }
-    public String getId() {return bid; }
+    public void setId(long proid) {
+        this.bid = proid;
+    }
 
-    public void setName(String pron) {this.bname = pron;    }
-    public String getName() {return bname; }
+    public long getId() {
+        return bid;
+    }
 
-    public void setPrice(double pron) {this.price = pron;    }
-    public double getPrice() {return price; }
+    public void setName(String pron) {
+        this.bname = pron;
+    }
+
+    public String getName() {
+        return bname;
+    }
+
+    public void setPrice(double pron) {
+        this.price = pron;
+    }
+
+    public double getPrice() {
+        return price;
+    }
 }
