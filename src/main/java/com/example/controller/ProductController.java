@@ -30,7 +30,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/Product")
 public class ProductController {
-
     @Autowired
     private ProductRepo prp;
 
