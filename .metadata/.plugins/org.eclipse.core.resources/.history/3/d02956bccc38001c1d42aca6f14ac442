@@ -1,0 +1,62 @@
+package com.example.DB.RealDB;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="News")
+public class News {
+	
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "nid")
+    private long nid;
+    @Column(name = "title")
+    private String title;
+    @Column(name = "descriptions")
+    private String descriptions;
+
+    public News(long i, String bn, String p) {
+        this.title = bn;
+        this.descriptions=p;
+
+    }
+
+    public News(String bn,String d) {
+        this.title = bn;
+        this.descriptions = d;
+
+    }
+
+    public News() {
+
+    }
+
+    public void setId(long proid) {
+        this.nid = proid;
+    }
+
+    public long getId() {
+        return nid;
+    }
+
+    public void setTitle(String pron) {
+        this.title = pron;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setDesc(String  pron) {
+        this.descriptions = pron;
+    }
+
+    public String  getDesc() {
+        return descriptions;
+    }
+}
