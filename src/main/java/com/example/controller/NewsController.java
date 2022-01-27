@@ -1,9 +1,9 @@
 package com.example.controller;
 
 
-import com.example.DB.RealDB.BraceletProduct;
+import com.example.DB.RealDB.News;
 
-import com.example.DB.RealDB.Service.ProductRepo;
+import com.example.DB.RealDB.Service.NewsRepo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,38 +28,38 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/Product")
-public class ProductController {
+@RequestMapping("/News")
+public class NewsController {
     @Autowired
-    private ProductRepo prp;
+    private NewsRepo prp;
 
     @GetMapping(value = "/show") //showall
-    public List<BraceletProduct> show() {
+    public List<News> show() {
         return prp.getAll();
     }
 
     @GetMapping(value = "/show/{id}")
-    public BraceletProduct show(@PathVariable long id) {
+    public News show(@PathVariable long id) {
         return prp.getByID(id);
     }
 
     @PostMapping("/add")
-    public String insert(@RequestBody BraceletProduct b) {
+    public String insert(@RequestBody News b) {
         prp.add(b);
-        return "เพิ่มสินค้าเรียบร้อย";
+        return "เพิ่มข่าวเรียบร้อย";
     }
 
     @DeleteMapping(value = "/del/{id}") //delController
     public String delete(@PathVariable long id) {
         prp.delete(id);
-        return "ลบสินค้ารหัส " + id + " เรียบร้อย";
+        return "ลบข่าวรหัส " + id + " เรียบร้อย";
     }
 
-    @PostMapping("/edit")
-    public BraceletProduct edit(@RequestBody BraceletProduct c) {
-        BraceletProduct b = prp.getByID(c.getId());
-        b.setName(c.getName());
-        b.setPrice(c.getPrice());
+    @PostMapping("/edit/{id}")
+    public News edit(@RequestBody News c) {
+    	News b = prp.getByID(c.getId());
+        b.setTitle(c.getTitle());
+        b.setDesc(c.getDesc());
         b.setId(c.getId());
         return prp.add(b);
     }

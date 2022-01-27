@@ -1,7 +1,7 @@
 package com.example.DB.RealDB.Repository;
 
-import com.example.DB.RealDB.BraceletProduct;
+import com.example.DB.RealDB.News;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ProductRepository extends JpaRepository<BraceletProduct,Long>{
+public interface NewsRepository extends JpaRepository<News,Long>{
 }
